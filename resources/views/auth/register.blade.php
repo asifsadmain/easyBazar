@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="paypal_account_no" class="col-md-4 col-form-label text-md-right">{{ __('Paypal Account No') }}</label>
+                            <label for="paypal_account_no" class="col-md-4 col-form-label text-md-right">{{ __('Paypal Account No (optional)') }}</label>
 
                             <div class="col-md-6">
                                 <input id="paypal_account_no" type="text" class="form-control" name="paypal_account_no" value="{{ old('paypal_account_no') }}" autocomplete="paypal_account_no" autofocus>

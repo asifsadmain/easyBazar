@@ -55,8 +55,8 @@ class RegisterController extends Controller
             'date_of_birth' => ['required', 'date'],
             'address' => ['required', 'string'],
             'mobile_no' => ['required', 'string', 'min:11'],
-            'personal_bkash_no' => ['string', 'min:11'],
-            'paypal_account_no' => ['string'],
+            'personal_bkash_no' => ['nullable', 'string', 'min:11'],
+            'paypal_account_no' => ['nullable', 'string'],
         ]);
     }
 
