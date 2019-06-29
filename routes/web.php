@@ -28,3 +28,5 @@ Route::get('/admin', function() {
 });
 
 Route::post('/admin/submit', 'AdminController@submit');
+
+Route::post('/postAd/submit', 'PostAdController@submit');

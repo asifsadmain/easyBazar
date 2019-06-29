@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('brand')->nullable();
             $table->integer('category_id')->unsigned()->index();
             $table->string('condition');
-            $table->year('buying_year');
+            $table->year('buying_year')->nullable();
             $table->mediumText('specification');
             $table->string('color')->nullable();
             $table->string('weight')->nullable();

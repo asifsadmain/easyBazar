@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Post Advertisement') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ URL::to('/postAd/submit') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -54,17 +54,17 @@
                         </div>
 
                         <div class="form-group row">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                                <label for="category_id" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
     
                                 <div class="col-md-6">
-                                    <select class="form-control">
+                                    <select class="form-control" name="category_id">
                                         {{ $categories = App\Category::all() }}
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
     
-                                    @error('category')
+                                    @error('category_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -76,7 +76,7 @@
                                 <label for="condition" class="col-md-4 col-form-label text-md-right">{{ __('Condition') }}</label>
     
                                 <div class="col-md-6">
-                                    <select  class="form-control">
+                                    <select  class="form-control" name="condition">
                                         <option value="Intact">Intact</option>
                                         <option value="Used">Used</option>
                                     </select>    
@@ -92,7 +92,7 @@
                                 <label for="buying_year" class="col-md-4 col-form-label text-md-right">{{ __('Buying year (for used product)') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="buying_year" type="text" class="form-control @error('buying_year') is-invalid @enderror" name="buying_year" value="{{ old('buying_year') }}" required autocomplete="buying_year" autofocus>
+                                    <input id="buying_year" type="text" class="form-control @error('buying_year') is-invalid @enderror" name="buying_year" value="{{ old('buying_year') }}" autocomplete="buying_year" autofocus>
     
                                     @error('buying_year')
                                         <span class="invalid-feedback" role="alert">
@@ -113,6 +113,20 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="proposed_price" class="col-md-4 col-form-label text-md-right">{{ __('Price (in BDT)') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="proposed_price" type="number" class="form-control @error('proposed_price') is-invalid @enderror" name="proposed_price" value="{{ old('proposed_price') }}" required autocomplete="proposed_price" autofocus>
+
+                                @error('proposed_price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 
@@ -176,7 +190,7 @@
                                 <label for="warranty" class="col-md-4 col-form-label text-md-right">{{ __('Warranty (months)') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="warranty" type="warranty" class="form-control @error('warranty') is-invalid @enderror" name="warranty" value="{{ old('warranty') }}" autocomplete="warranty" autofocus>
+                                    <input id="warranty" type="number" class="form-control @error('warranty') is-invalid @enderror" name="warranty" value="{{ old('warranty') }}" autocomplete="warranty" autofocus>
     
                                     @error('warranty')
                                         <span class="invalid-feedback" role="alert">
