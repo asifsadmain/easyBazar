@@ -1,0 +1,63 @@
+#app {
+    background-color: cornsilk;
+}
+#nav {
+    background-color:aqua; 
+}
+
+#brand2 {
+    font-family: fantasy;
+    color: coral;
+}
+
+footer {
+    background-color:aquamarine; 
+}
+
+#brand {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 200%;
+    color: floralwhite;
+}
+
+#header_card {
+    font-family: fantasy;
+    font-size: 200%;
+    background-color:cadetblue; 
+}
+
+
+.label_font {
+    font-family: Impact;
+    color:cadetblue;
+    font-size: 150%;
+}
+
+#category{
+    font-family: fantasy;
+    font-style: oblique;
+    color: aqua;
+}
+
+
+#cate {
+    font-family: fantasy;
+    font-style: oblique;
+    color: goldenrod;
+    padding-left: 7%;
+    padding-right: 5%;
+    padding-top: 5%;
+
+}
+
+#img {
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 3px;
+    padding: 2%;
+}
+
+
+#card {
+    background-color: burlywood;
+}

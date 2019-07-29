@@ -13,22 +13,20 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+    
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
 
     <!-- Styles -->
-    <link href="{{ asset('css/personal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{{ asset('css/personal.css') }}" rel="stylesheet">
 </head>
-<body >
+<body>
     <div id="app">
         <nav  id="nav" class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
-                <a style="font-weight:bolder " class="navbar-brand" href="{{ url('/') }}">
-                    <h1>{{ config('app.name', 'EasyBazar') }}</h1>
+                <a id="brand2" class="navbar-brand " href="{{ url('/') }}">
+                    <font size="8">{{ config('app.name', 'EasyBazar') }}</font>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -45,33 +43,27 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <h3><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a><h3>
+                                <a id="brand"  class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}"><h3>{{ __('Register') }}</h3></a>
+                                <li   class="nav-item">
+                                    <a id="brand" class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="navbar nav-item">
-                                <a href="/postAd" class="text-secondary"><h3>Post Ad</h3></a>
-                            </li>
-                            <li class="navbar nav-item">
-                                <a href="/conversations" class="text-secondary"><h3>Messages</h3></a>
+                                <a id="brand" href="/postAd" class="text-secondary">Post Ad</a>
                             </li>
                             <li class="nav-item dropdown">
-                               <a style="font-size: 200%" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   {{ Auth::user()->name }} <span class="caret"></span>  
+                                <a id="brand" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                        <h4>{{ __('Logout') }}</h4>
-                                    </a>
-                                    <a class="dropdown-item" href="/profile">
-                                        <h4>Profile</h4>
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -88,7 +80,17 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
-</body>
 
+    </div>
+    <footer class="page-footer font-medium darken-3">
+
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a  href="{{ url('/') }}"> EasyBazar.com</a>
+            <p> HeadQuarter: Dhanmondi,Dhaka.</p>
+            <p> Contact Us: 01731865911</p>
+
+        </div>
+
+    </footer>
+</body>
 </html>

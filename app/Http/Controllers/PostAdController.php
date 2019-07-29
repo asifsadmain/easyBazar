@@ -113,7 +113,70 @@ class PostAdController extends Controller
 
         $advertisement->save();
 
-        return "Success";
+        return redirect("/advertisements/{$product->id}");
 
+    }
+
+    public function update(Request $request, $id, $pid)
+    {
+        if($request->hasFile('display_image'))
+        {
+            $file = $request->file('display_image');
+            $fileNameWithExt = $request->file('display_image')->getClientOriginalName();
+            $file->move('uploads', $fileNameWithExt);
+        }
+
+        if($request->hasFile('img1'))
+        {
+            $file = $request->file('img1');
+            $fileNameWithExt = $request->file('img1')->getClientOriginalName();
+            $file->move('uploads', $fileNameWithExt);
+        }
+        if($request->hasFile('img2'))
+        {
+            $file = $request->file('img2');
+            $fileNameWithExt = $request->file('img2')->getClientOriginalName();
+            $file->move('uploads', $fileNameWithExt);
+        }
+        if($request->hasFile('img3'))
+        {
+            $file = $request->file('img3');
+            $fileNameWithExt = $request->file('img3')->getClientOriginalName();
+            $file->move('uploads', $fileNameWithExt);
+        }
+
+        if($request->hasFile('img4'))
+        {
+            $file = $request->file('img4');
+            $fileNameWithExt = $request->file('img4')->getClientOriginalName();
+            $file->move('uploads', $fileNameWithExt);
+        }
+
+        DB::table('advertisements')
+            ->where('id', $pid)
+            ->update(['display_image' => $request->input('display_image')],
+                    ['name' => $request->input('name')],
+                    ['brand' => $request->input('brand')],
+                    ['category_id' => $request->input('category_id')],
+                    ['condition' => $request->input('condition')],
+                    ['buying_year' => $request->input('buying_year')],
+                    ['specification' => $request->input('specification')],
+                    ['color' => $request->input('color')],
+                    ['weight' => $request->input('weight')],
+                    ['size' => $request->input('size')],
+                    ['guarantee' => $request->input('guarantee')],
+                    ['warranty' => $request->input('warranty')],
+                    ['img1' => $request->input('img1')],
+                    ['img2' => $request->input('img2')],
+                    ['img3' => $request->input('img3')],
+                    ['img4' => $request->input('img4')]
+            );
+
+            DB::table('advertisements')
+            ->where('id', $id)
+            ->update(['proposed_price' => $request->input('proposed_price')]
+            );
+
+        return redirect("/advertisements/{$pid}");
     }
 }
