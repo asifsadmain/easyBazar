@@ -46,26 +46,27 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a  class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a  class="nav-link font-weight-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a  class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a  class="nav-link font-weight-bold" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="navbar nav-item">
-                                <a  href="/postAd" class="text-secondary">Post Ad</a>
+                                <a  href="/postAd" class="text-secondary font-weight-bold">Post Ad</a>
                             </li>
                             <li class="navbar nav-item">
-                                <a  href="/conversations" class="text-secondary">Messages</a>
+                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Messages</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <li class="navbar nav-item dropdown">
+                                <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ URL::to('/userDashboard') }}">My Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

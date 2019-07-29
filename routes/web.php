@@ -52,3 +52,6 @@ Route::get('/conversations', function() {
     return view('conversation');
 });
 
+Route::get('/userDashboard', 'profileController@index');
+Route::get('/userDashboard/activities', 'profileController@activity');
+

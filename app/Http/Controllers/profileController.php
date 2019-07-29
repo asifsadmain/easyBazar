@@ -41,7 +41,17 @@ class profileController extends Controller
         //         $count++;
         //     }
         // }
-        return view('profile', ['profile_full' => $profile, 'adds' => $adds, 'count' => $count]);
+        return view('userDashboard', ['profile_full' => $profile, 'adds' => $adds, 'count' => $count]);
+    }
+
+    public function activity()
+    {
+        $ads = Advertisement::join('products', 'products.id', '=', 'advertisements.product_id')
+                ->where('user_id', '=', auth()->id())->get();
+        
+        $sold = Advertisement::sum('isSold');
+
+        return view('activity', ['ads' => $ads, 'totalSells' => $sold]);
     }
 
     public function editAd($id)

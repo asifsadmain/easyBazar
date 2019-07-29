@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-11">
             <div class="card">
-                <div id="header_card" class="card-header">{{ __('Post Advertisement') }}</div>
+                <div id="header_card" class="card-header">{{ __('Edit Advertisement') }}</div>
 
                 <div style="padding : 6%; font-size:125%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" class="container">
                 <div class="card-body">
