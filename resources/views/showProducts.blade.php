@@ -17,7 +17,7 @@
                     <div class="card" style="width: 15rem;">
                         <ul class="list-group list-group-flush">
                             @foreach ($categories as $category)
-                                <li class="list-group-item"><a class="text-secondary" href="{{ url("/categories/{$category->id}") }}">{{ $category->name }}</a></li>
+                                <li class="list-group-item"><a class="text-secondary font-weight-bold" href="{{ url("/categories/{$category->id}") }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -46,5 +46,6 @@
         
     </div>
 </body>
+<br><hr>
 @include('layouts.footer')
 </html>

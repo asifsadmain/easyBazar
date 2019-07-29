@@ -1,5 +1,6 @@
 #app {
-    background-color: cornsilk;
+
+    /* background-color:aquamarine;  */
 }
 #nav {
     background-color:aqua; 
@@ -11,7 +12,7 @@
 }
 
 footer {
-    background-color:aquamarine; 
+    background-color: white; 
 }
 
 #brand {
@@ -44,17 +45,12 @@ footer {
     font-family: fantasy;
     font-style: oblique;
     color: goldenrod;
-    padding-left: 7%;
-    padding-right: 5%;
-    padding-top: 5%;
-
 }
 
 #img {
     border-style: solid;
     border-width: 5px;
     border-radius: 3px;
-    padding: 2%;
 }
 
 

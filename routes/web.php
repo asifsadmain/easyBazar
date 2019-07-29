@@ -11,7 +11,13 @@
 |
 */
 
-Route::get('/', 'IndexPageController@index')->name('index');
+Route::get('/editAd/{id}', 'profileController@editAd');
+
+Route::post('/postAd/update/{id, pid}', 'PostAdController@update');
+
+Route::get('/profile', 'profileController@index');
+
+Route::get('/', 'HomeController@index')->name('index');
 
 Route::get('/test', function () {
     return view('test');
@@ -21,20 +27,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/editAd/{id}', 'profileController@editAd');
-
 Route::get('/postAd', function () {
     return view('postAd');
 });
 
-Route::get('/admin', function () {
+Route::get('/admin', function() {
     return view('admin');
 });
 
 Route::post('/admin/submit', 'AdminController@submit');
 
 Route::post('/postAd/submit', 'PostAdController@submit');
-Route::post('/postAd/update/{id, pid}', 'PostAdController@update');
 
 Route::get('/categories/{id}', 'ShowProductsController@index');
 
@@ -45,8 +48,7 @@ Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
 
-Route::get('/conversations', function () {
+Route::get('/conversations', function() {
     return view('conversation');
 });
 
-Route::get('/profile', 'profileController@index');
