@@ -40,6 +40,7 @@ Route::post('/admin/submit', 'AdminController@submit');
 Route::post('/postAd/submit', 'PostAdController@submit');
 
 Route::get('/categories/{id}', 'ShowProductsController@index');
+Route::get('/advertisements/search/{name}', 'ShowProductsController@showSearchedProducts');
 
 Route::get('/advertisements/{id}', 'ShowAdController@index');
 Route::post('/showAd/sendMessage/{id}', 'ShowAdController@sendMessage');
@@ -53,5 +54,12 @@ Route::get('/conversations', function() {
 });
 
 Route::get('/userDashboard', 'profileController@index');
+Route::get('/editProfile', function() {
+    return view('editProfile');
+});
+Route::post('/editProfile/submit', 'profileController@edit');
 Route::get('/userDashboard/activities', 'profileController@activity');
+
+Route::get('/autocomplete', 'AutocompleteController@index');
+Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
 

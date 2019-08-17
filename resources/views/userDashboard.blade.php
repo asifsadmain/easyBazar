@@ -13,6 +13,10 @@
         <div class="col-sm-9">
             <div class="card" style="width: 50rem;">
                 <img src="/uploads/avatar.jpg" height="200px" width="200px" class="align-self-center" alt="...">
+                <form action="{{ URL::to('/editProfile') }}" class="text-center">
+                    <input type="submit" class="" value="Edit Profile info">
+                </form>
+                <br>
                 <div class="card-body">
                     <h3 class="card-text text-primary text-center">{{ $profile_full->name }}</h3>
                     <br>

@@ -31,29 +31,29 @@
                     </div>
                 </div>
                 <br>
-                <h3 class="text-center bg-dark text-white">My Advertisements</h3>
-                <div class="container card">
-                    @foreach ($ads as $ad)
-                        <div class="row bg-primary">
-                            <div class="col-sm-8">
-                                    <p class="card-header font-weight-bold text-white">{{ $ad->name }}</p>
-                            </div>
-                            <div class="col-sm-2">
-                                    <a class="text-white btn btn-secondary" href="{{ url("/editAd/{$ad->id}") }}">Update</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <a class="text-white btn btn-secondary" href="#">Delete</a>
-                            </div>
-                        </div>
-                        {{-- <p class="card-header font-weight-bold bg-primary text-white">{{ $ad->name }} 
-                            <a class="text-white btn btn-primary" href="{{ url("/editAd/{$ad->id}") }}">Update</a>
-                        </p> --}}
-                        <div class="card-body">
-                            <p class="container">Brand : {{ $ad->brand }}</p>
-                            <p class=" container">Condition : {{ $ad->condition }}</p>
-                        </div>
-                    @endforeach
-                </div>
+                <h3 class="text-center bg-secondary text-white">My Advertisements</h3>
+                <table class="table table-striped">
+                    <thead>
+                        
+                    </thead>
+                    <tbody>
+                        @foreach ($ads as $ad)
+                        <tr>
+                            {{-- <th scope="row">#</th> --}}
+                            <td class="font-weight-bold"><a href="{{ url("/advertisements/{$ad->id}") }}"> {{ $ad->name }} </a></td>
+                            <td>
+                                <a class="text-primary btn btn-link" href="#">Mark as Sold</a>
+                            </td>
+                            <td>
+                                <a class="text-white btn btn-primary" href="{{ url("/editAd/{$ad->id}") }}">Update</a>
+                            </td>
+                            <td>
+                                <a class="text-white btn btn-danger" href="#">Delete</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

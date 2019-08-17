@@ -65,6 +65,7 @@
             <br>
         </div>
         <div class="bg-category">
+            <h3>Select Category</h3>
             @include('layouts.showCategory')
         </div>
     @endsection

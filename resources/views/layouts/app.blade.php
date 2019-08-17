@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,9 +27,9 @@
 </head>
 <body >
     <div>
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="height:15%">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-secondary" href="{{ url('/') }}">
                     <font size="8">{{ config('app.name', 'EasyBazar') }}</font>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -37,8 +38,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                    <ul class="navbar-nav mx-auto">
+                        <div class="container box nav-item">       
+                            <br>                     
+                            <div class="form-group" style="width: 300px;">
+                                <input type="text" name="product_name" id="product_name" class="form-control input-lg" placeholder="Search product, brand..." />
+                                <div class="dropdown-item" id="productList">
+                                </div>
+                            </div>
+                            {{ csrf_field() }}
+                        </div>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -55,7 +64,7 @@
                             @endif
                         @else
                             <li class="navbar nav-item">
-                                <a  href="/postAd" class="text-secondary font-weight-bold">Post Ad</a>
+                                <a  href="/postAd" class="nav-link text-secondary font-weight-bold">Post Ad</a>
                             </li>
                             <li class="navbar nav-item">
                                 <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Messages</a>
@@ -68,8 +77,8 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ URL::to('/userDashboard') }}">My Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -91,3 +100,31 @@
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function(){
+    
+        $('#product_name').keyup(function(){ 
+            var query = $(this).val();
+            if(query != '')
+            {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                url:"{{ route('autocomplete.fetch') }}",
+                method:"POST",
+                data:{query:query, _token:_token},
+                success:function(data){
+                $('#productList').fadeIn();  
+                        $('#productList').html(data);
+                }
+                });
+            }
+        });
+    
+        $(document).on('click', 'li', function(){  
+            $('#product_name').val($(this).text());  
+            $('#productList').fadeOut();  
+        });  
+    
+    });
+</script>

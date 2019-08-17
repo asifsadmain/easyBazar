@@ -44,6 +44,37 @@ class profileController extends Controller
         return view('userDashboard', ['profile_full' => $profile, 'adds' => $adds, 'count' => $count]);
     }
 
+    public function edit(Request $request)
+    {
+        $id = auth()->id();
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'date_of_birth' => 'required',
+            'address' => 'required',
+            'mobile_no' => 'required'
+        ]);
+
+        $user = User::find($id);
+
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->date_of_birth = $request->get('date_of_birth');
+        $user->address = $request->get('address');
+        $user->mobile_no = $request->get('mobile_no');
+        if ($request->get('personal_bkash_no')) {
+            $user->personal_bkash_no = $request->get('personal_bkash_no');
+        }
+        if ($request->get('paypal_account_no')) {
+            $user->paypal_account_no = $request->get('paypal_account_no');
+        }
+        
+        $user->save();
+
+        return redirect('/userDashboard');
+    }
+
     public function activity()
     {
         $ads = Advertisement::join('products', 'products.id', '=', 'advertisements.product_id')

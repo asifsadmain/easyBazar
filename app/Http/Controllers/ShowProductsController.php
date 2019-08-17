@@ -25,4 +25,15 @@ class ShowProductsController extends Controller
 
         return view('showProducts', ['products' => $productsWithPrice, 'categories' => Category::all()]);
     }
+
+    public function showSearchedProducts($name)
+    {
+        $productsWithPrice = DB::table('products')
+            ->join('advertisements', 'products.id', '=', 'advertisements.product_id')
+            ->select('products.*', 'advertisements.proposed_price')
+            ->where('products.name', $name)
+            ->get();
+
+        return view('showProducts', ['products' => $productsWithPrice, 'categories' => Category::all()]);
+    }
 }

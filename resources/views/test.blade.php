@@ -1,100 +1,56 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                background-image: url("/uploads/background.jpg");
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
+        <title>Ajax Autocomplete Textbox in Laravel using JQuery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style type="text/css">
+            .box{
+                width:600px;
+                margin:0 auto;
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-            
-            <div class="container container-fluid">
-                <div class="row">
-                    @foreach ($categories as $category)
-                    <div class="col-md-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="/uploads/{{ $category->image }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                    <p>{{ $category->name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
+    <br />
+    <div class="container box">
+        <h3 align="center">Ajax Autocomplete Textbox in Laravel using JQuery</h3><br />
+        
+        <div class="form-group" style="width: 300px;">
+            <input type="text" name="product_name" id="product_name" class="form-control input-lg" placeholder="What are you looking for" />
+            <div id="productList">
             </div>
         </div>
+        {{ csrf_field() }}
+    </div>
     </body>
 </html>
+
+<script>
+$(document).ready(function(){
+
+    $('#product_name').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '')
+        {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+            url:"{{ route('autocomplete.fetch') }}",
+            method:"POST",
+            data:{query:query, _token:_token},
+            success:function(data){
+            $('#productList').fadeIn();  
+                        $('#productList').html(data);
+            }
+            });
+        }
+    });
+
+    $(document).on('click', 'li', function(){  
+        $('#product_name').val($(this).text());  
+        $('#productList').fadeOut();  
+    });  
+
+});
+</script>
