@@ -11,10 +11,10 @@
             </div>
         </div>
         <div class="col-sm-9">
-            <div class="card" style="width: 50rem;">
+            <div class="card mb-3" style="max-width: 50rem;">
                 <br>
                 <div class="row">
-                    <div class="card bg-secondary" style="width: 18rem; height: 10rem; left: 10%;">
+                    <div class="card bg-info" style="width: 18rem; height: 10rem; left: 10%;">
                         <div class="card-body">
                             <br><br>
                             <h1 class="text-white text-center">{{ count($ads) }}</h1>
@@ -22,10 +22,10 @@
                         </div>
                     </div>
 
-                    <div class="card bg-secondary" style="width: 18rem; height: 10rem; left: 20%;">
+                    <div class="card bg-success" style="width: 18rem; height: 10rem; left: 20%;">
                         <div class="card-body">
                             <br><br>
-                            <h1 class="text-white text-center">0</h1>
+                            <h1 class="text-white text-center">{{ count($totalSells) }}</h1>
                             <h3 class="text-center text-white">sold</h3>
                         </div>
                     </div>
@@ -40,15 +40,20 @@
                         @foreach ($ads as $ad)
                         <tr>
                             {{-- <th scope="row">#</th> --}}
-                            <td class="font-weight-bold"><a href="{{ url("/advertisements/{$ad->id}") }}"> {{ $ad->name }} </a></td>
+                            <td><img src="/uploads/{{ $ad->display_image }}" alt="image not supported" height="100px" width="100px"></td>
+                            <td class="font-weight-bold"><a class="float-left" href="{{ url("/advertisements/{$ad->id}") }}"> {{ $ad->name }} </a></td>
                             <td>
-                                <a class="text-primary btn btn-link" href="#">Mark as Sold</a>
+                                @if ($ad->isSold)
+                                    <p class="text-success btn btn-link">Sold</p>
+                                @else
+                                    <a class="text-primary btn btn-link" href="{{ url("/markSold/{$ad->id}") }}">Mark as Sold</a>
+                                @endif
                             </td>
                             <td>
-                                <a class="text-white btn btn-primary" href="{{ url("/editAd/{$ad->id}") }}">Update</a>
+                                <a class="text-white btn btn-primary float-right" href="{{ url("/editAd/{$ad->id}") }}">Update</a>
                             </td>
                             <td>
-                                <a class="text-white btn btn-danger" href="#">Delete</a>
+                                <a class="text-white btn btn-danger" href="{{ url("/deleteAd/{$ad->id}") }}" onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>
                         @endforeach
@@ -58,3 +63,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function myFuntion() {
+        confirm("Press a button!");
+    }
+</script>
+
+
+

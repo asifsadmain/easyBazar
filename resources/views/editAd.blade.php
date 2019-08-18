@@ -10,20 +10,23 @@
                 <div style="padding : 6%; font-size:125%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" class="container">
                 <div class="card-body">
                 @foreach ($advertisements as $ad)
-                <form method="POST" action="{{ URL::to("/postAd/update/{[$ad->id, $ad->product_id]}") }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ URL::to("/postAd/update/{$ad->advertisement_id}/{$ad->id}") }}" enctype="multipart/form-data">
                         @csrf
+                        {{ method_field('PUT') }}
                         <div class="form-group row">
                             <label for="display_image" class="col-md-4 col-form-label text-md-right">{{ __('Display Image') }}</label>
-    
-                            <div class="col-md-6">
-                            <input id="display_image" value="{{$ad->display_image}}" type="file" class=" @error('display_image') is-invalid @enderror" name="display_image" value="{{ old('display_image') }}" required autocomplete="display_image" autofocus>
-    
-                                @error('display_image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <img src="/uploads/{{ $ad->display_image }}" alt="can't load image" height="100px" width="100px">
+                                <div class="col-md-6">
+                                    <input id="display_image" value="{{ $ad->display_image }}" type="file" class=" @error('display_image') is-invalid @enderror" name="display_image" value="{{ old('display_image') }}" autocomplete="display_image" autofocus>
+
+                                    @error('display_image')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                
+                            
                         </div>
 
                         <div class="form-group row">
@@ -61,7 +64,11 @@
                                     <select class="form-control" name="category_id">
                                         {{ $categories = App\Category::all() }}
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @if ($ad->category_id == $category->id)
+                                                <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                            @else
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
     
@@ -78,8 +85,13 @@
     
                                 <div class="col-md-6">
                                     <select  class="form-control" name="condition">
-                                        <option value="Intact">Intact</option>
-                                        <option value="Used">Used</option>
+                                        @if ($ad->condition == "Intact")
+                                            <option value="Intact" selected>Intact</option>
+                                            <option value="Used">Used</option>
+                                        @else
+                                            <option value="Used" selected>Used</option>
+                                            <option value="Intact">Intact</option>
+                                        @endif
                                     </select>    
                                     @error('condition')
                                         <span class="invalid-feedback" role="alert">
@@ -107,7 +119,7 @@
                                 <label for="specification" class="col-md-4 col-form-label text-md-right">{{ __('Specification') }}</label>
     
                                 <div class="col-md-6">
-                                    <textarea id="specification" value="{{$ad->specification}}" rows="10" class="form-control @error('specification') is-invalid @enderror" name="specification" value="{{ old('specification') }}" required autocomplete="specification" autofocus></textarea>
+                                    <textarea id="specification" rows="10" class="form-control @error('specification') is-invalid @enderror" name="specification" value="{{ old('specification') }}" required autocomplete="specification" autofocus>{{ $ad->specification }}</textarea>
     
                                     @error('specification')
                                         <span class="invalid-feedback" role="alert">
@@ -203,58 +215,78 @@
 
                         <div class="form-group row">
                             <label for="img1" class="col-md-4 col-form-label text-md-right">{{ __('Additional Image 1') }}</label>
-        
-                            <div class="col-md-6">
-                                <input id="img1" type="file" class=" @error('img1') is-invalid @enderror" name="img1" value="{{ old('img1') }}" autocomplete="img1" autofocus>
-        
-                                @error('img1')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <img src="/uploads/{{ $ad->img1 }}" alt="can't load image" height="100px" width="100px">
+                            
+                                {{-- <img src="/uploads/{{ $ad->img1 }}" alt="can't load image" height="100px" width="100px">
+                                <a class="text" onclick="return confirm('Are you sure?')" href="{{ url("/deleteImg1/{$ad->id}") }}">Delete/Change</a> --}}
+                            
+                                <div class="col-md-6">
+                                    <input id="img1" type="file" value="{{ $ad->img1 }}" class=" @error('img1') is-invalid @enderror" name="img1" value="{{ old('img1') }}" autocomplete="img1" autofocus>
+            
+                                    @error('img1')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            
                         </div>
 
                         <div class="form-group row">
                             <label for="img2" class="col-md-4 col-form-label text-md-right">{{ __('Additional Image 2') }}</label>
-            
-                            <div class="col-md-6">
-                                <input id="img2" type="file" class=" @error('img2') is-invalid @enderror" name="img2" value="{{ old('img2') }}" autocomplete="img2" autofocus>
-            
-                                @error('img2')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <img src="/uploads/{{ $ad->img2 }}" alt="can't load image" height="100px" width="100px">
+                            
+                                {{-- <img src="/uploads/{{ $ad->img2 }}" alt="can't load image" height="100px" width="100px">
+                                <a class="text" onclick="return confirm('Are you sure?')" href="{{ url("/deleteImg2/{$ad->id}") }}">Delete/Change</a> --}}
+                            
+                                <div class="col-md-6">
+                                    <input id="img2" type="file" value="{{ $ad->img2 }}" class=" @error('img2') is-invalid @enderror" name="img2" value="{{ old('img2') }}" autocomplete="img2" autofocus>
+                
+                                    @error('img2')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            
                         </div>
 
                         <div class="form-group row">
                             <label for="img3" class="col-md-4 col-form-label text-md-right">{{ __('Additional Image 3') }}</label>
-                
-                            <div class="col-md-6">
-                                <input id="img3" type="file" class=" @error('img3') is-invalid @enderror" name="img3" value="{{ old('img3') }}" autocomplete="img3" autofocus>
-                
-                                @error('img3')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <img src="/uploads/{{ $ad->img3 }}" alt="can't load image" height="100px" width="100px">
+                            
+                                {{-- <img src="/uploads/{{ $ad->img3 }}" alt="can't load image" height="100px" width="100px">
+                                <a class="text" onclick="return confirm('Are you sure?')" href="{{ url("/deleteImg3/{$ad->id}") }}">Delete/Change</a> --}}
+                            
+                                <div class="col-md-6">
+                                    <input id="img3" type="file" value="{{ $ad->img3 }}" class=" @error('img3') is-invalid @enderror" name="img3" value="{{ old('img3') }}" autocomplete="img3" autofocus>
+                    
+                                    @error('img3')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            
                         </div>
 
                         <div class="form-group row">
                             <label for="img4" class="col-md-4 col-form-label text-md-right">{{ __('Additional Image 4') }}</label>
-                    
-                            <div class="col-md-6">
-                                <input id="img4" type="file" class=" @error('img4') is-invalid @enderror" name="img4" value="{{ old('img4') }}" autocomplete="img4" autofocus>
-                    
-                                @error('img4')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <img src="/uploads/{{ $ad->img4 }}" alt="can't load image" height="100px" width="100px">
+                            
+                                {{-- <img src="/uploads/{{ $ad->img4 }}" alt="can't load image" height="100px" width="100px">
+                                <a class="text" onclick="return confirm('Are you sure?')" href="{{ url("/deleteImg4/{$ad->id}") }}">Delete/Change</a> --}}
+                            
+                                <div class="col-md-6">
+                                    <input id="img4" type="file" value="{{ $ad->img4 }}" class=" @error('img4') is-invalid @enderror" name="img4" value="{{ old('img4') }}" autocomplete="img4" autofocus>
+                        
+                                    @error('img4')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            
                         </div>
 
                         <div class="form-group row mb-0">

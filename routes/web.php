@@ -12,8 +12,15 @@
 */
 
 Route::get('/editAd/{id}', 'profileController@editAd');
+Route::get('/deleteAd/{id}', 'profileController@deleteAd');
+Route::get('/markSold/{id}', 'profileController@markSold');
+Route::get('/deleteDisplayImage/{id}', 'profileController@deleteDisplayImage');
+Route::get('/deleteImg1/{id}', 'profileController@deleteImg1');
+Route::get('/deleteImg2/{id}', 'profileController@deleteImg2');
+Route::get('/deleteImg3/{id}', 'profileController@deleteImg3');
+Route::get('/deleteImg4/{id}', 'profileController@deleteImg4');
 
-Route::post('/postAd/update/{id, pid}', 'PostAdController@update');
+Route::put('/postAd/update/{id}/{pid}', 'profileController@updateProduct');
 
 Route::get('/profile', 'profileController@index');
 
