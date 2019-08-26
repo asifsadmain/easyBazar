@@ -22,10 +22,10 @@ class CreateDeliveryMenTable extends Migration
             $table->string('mobile_no')->unique();
             $table->mediumText('address');
             $table->date('date_of_birth');
-            $table->string('preffered_loc1');
-            $table->string('preffered_loc2');
-            $table->string('preffered_loc3');
-            $table->string('preffered_loc4');
+            $table->string('preffered_loc1')->nullable();
+            $table->string('preffered_loc2')->nullable();
+            $table->string('preffered_loc3')->nullable();
+            $table->string('preffered_loc4')->nullable();
             $table->timestamps();
         });
     }

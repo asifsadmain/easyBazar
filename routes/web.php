@@ -70,3 +70,12 @@ Route::get('/userDashboard/activities', 'profileController@activity');
 Route::get('/autocomplete', 'AutocompleteController@index');
 Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
 
+Route::get('/dm/register', 'DMRegisterController@index');
+Route::post('/dm/register/submit', 'DMRegisterController@register');
+
+Route::get('/dm/login', 'DMLoginController@index');
+Route::post('/dm/loginSubmit', 'DMLoginController@checkLogin');
+
+Route::get('/dm/home', function() {
+    return view('dm.home');
+});
