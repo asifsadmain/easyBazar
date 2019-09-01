@@ -26,6 +26,8 @@ class CreateDeliveryMenTable extends Migration
             $table->string('preffered_loc2')->nullable();
             $table->string('preffered_loc3')->nullable();
             $table->string('preffered_loc4')->nullable();
+            $table->integer('rating')->default(0);
+            $table->integer('rated_by')->default(0);
             $table->timestamps();
         });
     }

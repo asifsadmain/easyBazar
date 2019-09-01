@@ -30,6 +30,10 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/test2', function () {
+    return view('test2');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -66,16 +70,26 @@ Route::get('/editProfile', function() {
 });
 Route::post('/editProfile/submit', 'profileController@edit');
 Route::get('/userDashboard/activities', 'profileController@activity');
+Route::post('/activities/updateqty/{id}/{pid}', 'ActivityController@updateQuantity');
 
 Route::get('/autocomplete', 'AutocompleteController@index');
 Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
 
-Route::get('/dm/register', 'DMRegisterController@index');
+Route::get('/dm/register', 'DMRegisterController@index')->name('dm.register');
 Route::post('/dm/register/submit', 'DMRegisterController@register');
 
-Route::get('/dm/login', 'DMLoginController@index');
-Route::post('/dm/loginSubmit', 'DMLoginController@checkLogin');
+// Route::get('/dm/login', 'DMLoginController@index');
+// Route::post('/dm/loginSubmit', 'DMLoginController@checkLogin');
+
+Route::get('/dm/login', 'Auth\DMLoginController@showLoginForm')->name('dm.login');
+Route::post('/dm/login', 'Auth\DMLoginController@login')->name('dm.login.post');
+Route::post('/dm/logout', 'Auth\DMLoginController@logout')->name('dm.logout');
+
+Route::group(['middleware'=>'dm'], function() {
+    Route::get('/dm/home', 'dm\HomeController@index');
+});
 
 Route::get('/dm/home', function() {
     return view('dm.home');
 });
+

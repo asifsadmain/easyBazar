@@ -1,3 +1,10 @@
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+</style>
+
 @include('layouts.app')
 
 <div class="container">
@@ -25,7 +32,7 @@
                     <div class="card bg-success" style="width: 18rem; height: 10rem; left: 20%;">
                         <div class="card-body">
                             <br><br>
-                            <h1 class="text-white text-center">{{ count($totalSells) }}</h1>
+                            <h1 class="text-white text-center">{{ $totalSells }}</h1>
                             <h3 class="text-center text-white">sold</h3>
                         </div>
                     </div>
@@ -43,11 +50,11 @@
                             <td><img src="/uploads/{{ $ad->display_image }}" alt="image not supported" height="100px" width="100px"></td>
                             <td class="font-weight-bold"><a class="float-left" href="{{ url("/advertisements/{$ad->id}") }}"> {{ $ad->name }} </a></td>
                             <td>
-                                @if ($ad->isSold)
-                                    <p class="text-success btn btn-link">Sold</p>
-                                @else
-                                    <a class="text-primary btn btn-link" href="{{ url("/markSold/{$ad->id}") }}">Mark as Sold</a>
-                                @endif
+                                <form action={{ URL::to("/activities/updateqty/{$ad->id}/{$ad->product_id}") }} method="post">
+                                    @csrf
+                                    <input name="qty" type="number" min="0" style="width:30px;" value="{{ $ad->quantity }}">
+                                    <input type="submit" value="update qty.">
+                                </form>
                             </td>
                             <td>
                                 <a class="text-white btn btn-primary float-right" href="{{ url("/editAd/{$ad->id}") }}">Update</a>

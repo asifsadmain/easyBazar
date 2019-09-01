@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('condition');
             $table->year('buying_year')->nullable();
             $table->mediumText('specification');
+            $table->integer('quantity');
             $table->string('color')->nullable();
             $table->string('weight')->nullable();
             $table->string('size')->nullable();
@@ -31,6 +32,8 @@ class CreateProductsTable extends Migration
             $table->string('img2')->nullable();
             $table->string('img3')->nullable();
             $table->string('img4')->nullable();
+            $table->integer('rating')->default(0);
+            $table->integer('rated_by')->default(0);
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });

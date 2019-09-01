@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('mobile_no')->unique();
             $table->string('personal_bkash_no')->unique()->nullable();
             $table->string('paypal_account_no')->unique()->nullable();
+            $table->integer('rating')->default(0);
+            $table->integer('rated_by')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

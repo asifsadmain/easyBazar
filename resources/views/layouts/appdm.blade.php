@@ -53,43 +53,22 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            <li class="navbar nav-item dropdown">
-                                <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Login
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a  class="dropdown-item" href="{{ route('login') }}">{{ __('As User') }}</a>
-                                    <a  class="dropdown-item" href="{{ route('dm.login') }}">{{ __('As DeliveryMan') }}</a>
-                                </div>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="navbar nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Register
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a  class="dropdown-item" href="{{ route('register') }}">{{ __('As User') }}</a>
-                                        <a  class="dropdown-item" href="{{ route('dm.register') }}">{{ __('As DeliveryMan') }}</a>
-                                    </div>
-                                </li>
-                            @endif
-                        @else
+                        @if (Auth::guard('dm')->check())
                             <li class="navbar nav-item">
                                 <a  href="/postAd" class="nav-link text-secondary font-weight-bold">Post Ad</a>
                             </li>
                             <li class="navbar nav-item">
-                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Messages</a>
+                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Pick a product</a>
                             </li>
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::guard('dm')->user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('/userDashboard') }}">My Profile</a>
-                                    <a href="{{ URL::to('/userDashboard/activities') }}" class="dropdown-item">My Activities</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    {{-- <a class="dropdown-item" href="{{ URL::to('/userDashboard') }}">My Profile</a>
+                                    <a href="{{ URL::to('/userDashboard/activities') }}" class="dropdown-item">My Activities</a> --}}
+                                    <a class="dropdown-item" href="{{ route('dm.logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -100,7 +79,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                            @endif
                     </ul>
                 </div>
             </div>

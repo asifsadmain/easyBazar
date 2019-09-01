@@ -1,56 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Ajax Autocomplete Textbox in Laravel using JQuery</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <style type="text/css">
-            .box{
-                width:600px;
-                margin:0 auto;
-            }
-        </style>
-    </head>
-    <body>
-    <br />
-    <div class="container box">
-        <h3 align="center">Ajax Autocomplete Textbox in Laravel using JQuery</h3><br />
-        
-        <div class="form-group" style="width: 300px;">
-            <input type="text" name="product_name" id="product_name" class="form-control input-lg" placeholder="What are you looking for" />
-            <div id="productList">
-            </div>
-        </div>
-        {{ csrf_field() }}
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Directions Service</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+    <b>Start: </b>
+    <select id="start">
+        <option value="panthapath, dhaka">Panthapath</option>
+        <option value="buet, dhaka">BUET</option>
+      <option value="joplin, mo">Joplin, MO</option>
+      <option value="oklahoma city, ok">Oklahoma City</option>
+      <option value="amarillo, tx">Amarillo</option>
+      <option value="gallup, nm">Gallup, NM</option>
+      <option value="flagstaff, az">Flagstaff, AZ</option>
+      <option value="winona, az">Winona</option>
+      <option value="kingman, az">Kingman</option>
+      <option value="barstow, ca">Barstow</option>
+      <option value="san bernardino, ca">San Bernardino</option>
+      <option value="los angeles, ca">Los Angeles</option>
+    </select>
+    <b>End: </b>
+    <select id="end">
+        <option value="panthapath, dhaka">Panthapath</option>
+        <option value="buet, dhaka">BUET</option>
+      <option value="joplin, mo">Joplin, MO</option>
+      <option value="oklahoma city, ok">Oklahoma City</option>
+      <option value="amarillo, tx">Amarillo</option>
+      <option value="gallup, nm">Gallup, NM</option>
+      <option value="flagstaff, az">Flagstaff, AZ</option>
+      <option value="winona, az">Winona</option>
+      <option value="kingman, az">Kingman</option>
+      <option value="barstow, ca">Barstow</option>
+      <option value="san bernardino, ca">San Bernardino</option>
+      <option value="los angeles, ca">Los Angeles</option>
+    </select>
     </div>
-    </body>
-</html>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: {lat: 23.8103, lng: 90.4125}
+        });
+        directionsRenderer.setMap(map);
 
-<script>
-$(document).ready(function(){
+        var onChangeHandler = function() {
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document.getElementById('start').addEventListener('change', onChangeHandler);
+        document.getElementById('end').addEventListener('change', onChangeHandler);
+      }
 
-    $('#product_name').keyup(function(){ 
-        var query = $(this).val();
-        if(query != '')
-        {
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-            url:"{{ route('autocomplete.fetch') }}",
-            method:"POST",
-            data:{query:query, _token:_token},
-            success:function(data){
-            $('#productList').fadeIn();  
-                        $('#productList').html(data);
-            }
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        directionsService.route(
+            {
+              origin: {query: document.getElementById('start').value},
+              destination: {query: document.getElementById('end').value},
+              travelMode: 'DRIVING'
+            },
+            function(response, status) {
+              if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+              } else {
+                window.alert('Directions request failed due to ' + status);
+              }
             });
-        }
-    });
-
-    $(document).on('click', 'li', function(){  
-        $('#product_name').val($(this).text());  
-        $('#productList').fadeOut();  
-    });  
-
-});
-</script>
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCICVFZg9PawAeVO5oH_BRdE7IEu93eG8E&callback=initMap">
+    </script>
+  </body>
+</html>

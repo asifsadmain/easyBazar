@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Geolocation</title>
+    <title>DeliveryMan Home</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    @include('layouts.app')
+    @include('layouts.appdm')
     <div id="map" style="height: 50%;"></div>
     <script>
         // Note: This example requires that you consent to location sharing when
@@ -29,7 +29,7 @@
         var map, infoWindow;
         function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
+            center: {lat: 23.8103, lng: 90.4125},
             zoom: 16
         });
         //infoWindow = new google.maps.InfoWindow;

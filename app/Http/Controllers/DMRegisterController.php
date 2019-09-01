@@ -61,6 +61,6 @@ class DMRegisterController extends Controller
 
         $dm->save();
 
-        return "success";
+        return redirect('/dm/home');
     }
 }

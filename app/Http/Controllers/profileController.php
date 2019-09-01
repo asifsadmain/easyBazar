@@ -80,7 +80,7 @@ class profileController extends Controller
         $ads = Advertisement::join('products', 'products.id', '=', 'advertisements.product_id')
                 ->where('user_id', '=', auth()->id())->get();
         
-        $sold = Advertisement::where('isSold', '=', 1)->where('user_id', '=', auth()->id())->get();
+        $sold = DB::table('advertisements')->where('user_id', '=', auth()->id())->sum('isSold');
 
         return view('activity', ['ads' => $ads, 'totalSells' => $sold]);
     }
@@ -109,7 +109,7 @@ class profileController extends Controller
     {
         $ad = Advertisement::find($id);
 
-        $ad->isSold = 1;
+        $ad->isSold += 1;
         $ad->save();
 
         return redirect('/userDashboard/activities');
@@ -118,8 +118,8 @@ class profileController extends Controller
     public function updateProduct(Request $request, $id, $pid)
     {
         $product = Product::find($pid);
-        print_r($id);
-        print_r($pid);
+        // print_r($id);
+        // print_r($pid);
         $advertisement = Advertisement::find($id);
 
         $product->name = $request->get('name');
