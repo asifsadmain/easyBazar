@@ -34,6 +34,8 @@ Route::get('/test2', function () {
     return view('test2');
 });
 
+Route::get('/notifyDM', 'HomeController@notifyDM');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

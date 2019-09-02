@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/455b88d2ea.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -76,10 +77,13 @@
                             @endif
                         @else
                             <li class="navbar nav-item">
-                                <a  href="/postAd" class="nav-link text-secondary font-weight-bold">Post Ad</a>
+                                <a  href="/postAd" class="nav-link text-secondary font-weight-bold"><i title="Post Ad" class="fas fa-lg fa-plus-circle"></i></a>
                             </li>
                             <li class="navbar nav-item">
-                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Messages</a>
+                                <a  href="/notifyDM" class="nav-link text-secondary font-weight-bold"><i title="Notify DeliveryMan" class="fas fa-flag-checkered fa-lg"></i></a>
+                            </li>
+                            <li class="navbar nav-item">
+                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold"><i title="Messages" class="far fa-lg fa-envelope"></i></a>
                             </li>
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

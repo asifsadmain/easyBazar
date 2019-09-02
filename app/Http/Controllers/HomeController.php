@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\DeliveryMan;
+use App\Notifications\NotifyDM;
+use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
@@ -25,5 +28,14 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', ['categories' => Category::all()]);
+    }
+
+    public function notifyDM()
+    {
+        $deliverymen = DeliveryMan::all();
+
+        foreach ($deliverymen as $dm) {
+            $dm->notify(new NotifyDM(1));
+        }
     }
 }

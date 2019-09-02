@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/455b88d2ea.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -54,11 +55,19 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @if (Auth::guard('dm')->check())
+                        <li class="navbar nav-item dropdown">
+                            <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                @foreach (Auth::guard('dm')->user()->unreadNotifications as $notification)
+                                <a class="dropdown-item" href="#">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                                <div class="dropdown-divider"></div>
+                                @endforeach
+                            </div>
+                        </li>
                             <li class="navbar nav-item">
-                                <a  href="/postAd" class="nav-link text-secondary font-weight-bold">Post Ad</a>
-                            </li>
-                            <li class="navbar nav-item">
-                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">Pick a product</a>
+                                <a  href="#" class="nav-link text-secondary font-weight-bold"><i title="Pick a Product" class="fas fa-lg fa-biking"></i></a>
                             </li>
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
