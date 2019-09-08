@@ -48,7 +48,9 @@ class RequestSeller extends Notification
             'sender_id' => auth()->user()->id,
             'sender_name' => auth()->user()->name,
             'sender_address' => auth()->user()->address,
-            'product_id' => $this->details['product_id']
+            'receiver_id' => $this->details['seller_id'],
+            'product_id' => $this->details['product_id'],
+            'product_name' => $this->details['product_name']
         ];
     }
 

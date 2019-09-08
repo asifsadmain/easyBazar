@@ -30,7 +30,7 @@
     <div>
         <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="height:15%">
             <div class="container">
-                <a class="navbar-brand text-secondary" href="{{ url('/') }}">
+                <a class="navbar-brand text-secondary" href="{{ url('/dm/home') }}">
                     <font size="8">{{ config('app.name', 'EasyBazar') }}</font>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -59,7 +59,7 @@
                             <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
                                 @if (count(Auth::guard('dm')->user()->unreadNotifications)==0)
                                     <a class="dropdown-item" href="#">There is no new notification for you</a>
                                 @else
@@ -72,6 +72,8 @@
                                     <a class="dropdown-item" href="/showRoute/{{ $notification->data['sender_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
                                     @endforeach
                                 @endif
+                                <div class="dropdown-divider"></div>
+                                <a href="" data-toggle="modal" data-target="#notificationModalScrollable">See All Notifications</a>
                             </div>
                         </li>
                             <li class="navbar nav-item">
@@ -106,6 +108,30 @@
             @yield('content')
         </main>
     </div>
+    @if (Auth::guard('dm')->user())
+        <div class="modal fade" id="notificationModalScrollable" tabindex="-1" role="dialog" aria-labelledby="notificationModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationModalScrollableTitle">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach (Auth::guard('dm')->user()->notifications as $notification)
+                        <div @if ($loop->first)
+                            class="hidden"
+                        @else
+                            class="dropdown-divider"
+                        @endif ></div>
+                        <a class="dropdown-item" href="/showRoute/{{ $notification->data['sender_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </body>
 
 </html>

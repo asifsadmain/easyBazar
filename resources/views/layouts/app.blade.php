@@ -79,8 +79,29 @@
                             <li class="navbar nav-item">
                                 <a  href="/postAd" class="nav-link text-secondary font-weight-bold"><i title="Post Ad" class="fas fa-lg fa-plus-circle"></i></a>
                             </li>
-                            <li class="navbar nav-item">
+                            {{-- <li class="navbar nav-item">
                                 <a  href="/notifyDM" class="nav-link text-secondary font-weight-bold"><i title="Notify DeliveryMan" class="fas fa-flag-checkered fa-lg"></i></a>
+                            </li> --}}
+                            <li class="navbar nav-item dropdown" id="markAsRead" onclick="markNotificationsAsRead()">
+                                <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                                    @if (count(Auth::user()->unreadNotifications)==0)
+                                        <a class="dropdown-item" href="#">There is no new notification for you</a>
+                                    @else
+                                        @foreach (Auth::user()->unreadNotifications as $notification)
+                                        <div @if ($loop->first)
+                                            class="hidden"
+                                        @else
+                                            class="dropdown-divider"
+                                        @endif ></div>
+                                        <a class="dropdown-item" href="">{{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}</a>
+                                        @endforeach
+                                    @endif
+                                    <div class="dropdown-divider"></div>
+                                    <a href="" data-toggle="modal" data-target="#notificationModalScrollable">See All Notifications</a>
+                                </div>
                             </li>
                             <li class="navbar nav-item">
                                 <a  href="/conversations" class="nav-link text-secondary font-weight-bold"><i title="Messages" class="far fa-lg fa-envelope"></i></a>
@@ -114,6 +135,50 @@
             @yield('content')
         </main>
     </div>
+    @if (Auth::user())
+        <div class="modal fade" id="notificationModalScrollable" tabindex="-1" role="dialog" aria-labelledby="notificationModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationModalScrollableTitle">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach (Auth::user()->notifications as $notification)
+                        <div @if ($loop->first)
+                            class="hidden"
+                        @else
+                            class="dropdown-divider"
+                        @endif ></div>
+                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal">{{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You are about to sell the product to the selected buyer. Please select any of the two options...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </body>
 
 </html>
@@ -144,4 +209,9 @@
         });  
     
     });
+</script>
+<script>
+    function markNotificationsAsRead() {
+        $.get('markAsRead');
+    }
 </script>

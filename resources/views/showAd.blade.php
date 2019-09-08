@@ -121,9 +121,12 @@
                 <p class="card-text">{{ $advertisement->warranty }} month(s)</p>
             @endif
             @if (Auth::user())
+                <a id="request" href="/requestSeller/{{ $advertisement->user_id }}/{{ $advertisement->product_id }}" class="btn btn-success">Request seller to buy this product</a>
+            @endif
+            @if (Auth::user())
                 <form method="POST" action="{{ URL::to("/showAd/sendMessage/{$advertisement->user_id}") }}">
                     @csrf
-
+                    <br>
                     <div class="form-group row">
                         <div class="col-md-6">
                             <textarea id="text" rows="5" class="form-control @error('text') is-invalid @enderror" name="text" value="{{ old('text') }}" autocomplete="text" placeholder="Send a message to contact with the seller..." autofocus></textarea>

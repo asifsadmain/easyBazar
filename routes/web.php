@@ -35,6 +35,7 @@ Route::get('/test2', function () {
 });
 
 Route::get('/notifyDM', 'HomeController@notifyDM');
+Route::get('/requestSeller/{uid}/{pid}', 'NotificationController@requestSeller');
 
 Auth::routes();
 
@@ -98,5 +99,9 @@ Route::get('/dm/home', function() {
 
 Route::get('/dm/markAsRead', function () {
     auth('dm')->user()->unreadNotifications->markAsRead();
+});
+
+Route::get('/markAsRead', function () {
+    auth()->user()->unreadNotifications->markAsRead();
 });
 
