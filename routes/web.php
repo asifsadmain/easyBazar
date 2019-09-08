@@ -86,6 +86,7 @@ Route::post('/dm/register/submit', 'DMRegisterController@register');
 Route::get('/dm/login', 'Auth\DMLoginController@showLoginForm')->name('dm.login');
 Route::post('/dm/login', 'Auth\DMLoginController@login')->name('dm.login.post');
 Route::post('/dm/logout', 'Auth\DMLoginController@logout')->name('dm.logout');
+Route::get('showRoute/{id}', 'DeliveryManController@showRoute');
 
 Route::group(['middleware'=>'dm'], function() {
     Route::get('/dm/home', 'dm\HomeController@index');
@@ -93,5 +94,9 @@ Route::group(['middleware'=>'dm'], function() {
 
 Route::get('/dm/home', function() {
     return view('dm.home');
+});
+
+Route::get('/dm/markAsRead', function () {
+    auth('dm')->user()->unreadNotifications->markAsRead();
 });
 

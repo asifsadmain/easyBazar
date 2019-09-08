@@ -18,7 +18,7 @@
       }
       #floating-panel {
         position: absolute;
-        top: 10px;
+        top: 110px;
         left: 25%;
         z-index: 5;
         background-color: #fff;
@@ -32,46 +32,26 @@
     </style>
   </head>
   <body>
+    @include('layouts.appdm')
     <div id="floating-panel">
     <b>Start: </b>
     <select id="start">
-        <option value="panthapath, dhaka">Panthapath</option>
-        <option value="buet, dhaka">BUET</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
-      <option value="flagstaff, az">Flagstaff, AZ</option>
-      <option value="winona, az">Winona</option>
-      <option value="kingman, az">Kingman</option>
-      <option value="barstow, ca">Barstow</option>
-      <option value="san bernardino, ca">San Bernardino</option>
-      <option value="los angeles, ca">Los Angeles</option>
+      <option value="{{ Auth::guard('dm')->user()->address }}">{{ Auth::guard('dm')->user()->address }}</option>
     </select>
     <b>End: </b>
     <select id="end">
-        <option value="panthapath, dhaka">Panthapath</option>
-        <option value="buet, dhaka">BUET</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
-      <option value="flagstaff, az">Flagstaff, AZ</option>
-      <option value="winona, az">Winona</option>
-      <option value="kingman, az">Kingman</option>
-      <option value="barstow, ca">Barstow</option>
-      <option value="san bernardino, ca">San Bernardino</option>
-      <option value="los angeles, ca">Los Angeles</option>
+      <option value="{{ $seller->address }}">{{ $seller->address }}</option>
     </select>
+    <button id="route">Show Route</button>
     </div>
-    <div id="map"></div>
+    <div id="map" style="height: 50%; top:20px;"></div>
     <script>
       function initMap() {
         var directionsService = new google.maps.DirectionsService();
         var directionsRenderer = new google.maps.DirectionsRenderer();
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 23.8103, lng: 90.4125}
+            zoom: 7,
+            center: {lat: 23.8103, lng: 90.4125}
         });
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -97,8 +77,8 @@
         var onChangeHandler = function() {
           calculateAndDisplayRoute(directionsService, directionsRenderer);
         };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
+        document.getElementById('route').addEventListener('click', onChangeHandler);
+        //document.getElementById('end').addEventListener('change', onChangeHandler);
       }
 
       function calculateAndDisplayRoute(directionsService, directionsRenderer) {

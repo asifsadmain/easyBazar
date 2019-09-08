@@ -55,15 +55,23 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @if (Auth::guard('dm')->check())
-                        <li class="navbar nav-item dropdown">
+                        <li class="navbar nav-item dropdown" id="markAsRead" onclick="markNotificationsAsRead()">
                             <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @foreach (Auth::guard('dm')->user()->unreadNotifications as $notification)
-                                <a class="dropdown-item" href="#">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
-                                <div class="dropdown-divider"></div>
-                                @endforeach
+                                @if (count(Auth::guard('dm')->user()->unreadNotifications)==0)
+                                    <a class="dropdown-item" href="#">There is no new notification for you</a>
+                                @else
+                                    @foreach (Auth::guard('dm')->user()->unreadNotifications as $notification)
+                                    <div @if ($loop->first)
+                                        class="hidden"
+                                    @else
+                                        class="dropdown-divider"
+                                    @endif ></div>
+                                    <a class="dropdown-item" href="/showRoute/{{ $notification->data['sender_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                                    @endforeach
+                                @endif
                             </div>
                         </li>
                             <li class="navbar nav-item">
@@ -125,7 +133,15 @@
         $(document).on('click', 'li', function(){  
             $('#product_name').val($(this).text());  
             $('#productList').fadeOut();  
-        });  
+        }); 
+
+        
     
     });
+</script>
+
+<script>
+    function markNotificationsAsRead() {
+        $.get('markAsRead');
+    }
 </script>
