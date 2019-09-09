@@ -17,9 +17,9 @@ class NotifyDM extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -45,7 +45,12 @@ class NotifyDM extends Notification
             'notificationTime' => Carbon::now(),
             'sender_id' => auth()->user()->id,
             'sender_name' => auth()->user()->name,
-            'sender_address' => auth()->user()->address
+            'sender_address' => auth()->user()->address,
+            'buyer_id' => $this->details['buyer_id'],
+            'buyer_name' => $this->details['buyer_name'],
+            'buyer_address' => $this->details['buyer_address'],
+            'product_id' => $this->details['product_id'],
+            'product_name' => $this->details['product_name']
         ];
     }
 

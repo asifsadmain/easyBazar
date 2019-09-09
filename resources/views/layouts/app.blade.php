@@ -50,7 +50,10 @@
                             {{ csrf_field() }}
                         </div>
                     </ul>
-
+                    @php
+                        $current_buyer_id = "";
+                        $current_product_id = "";
+                    @endphp
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -90,13 +93,23 @@
                                     @if (count(Auth::user()->unreadNotifications)==0)
                                         <a class="dropdown-item" href="#">There is no new notification for you</a>
                                     @else
+                                    {{-- @php
+                                        $current_buyer_id = "";
+                                        $current_product_id = "";
+                                    @endphp --}}
                                         @foreach (Auth::user()->unreadNotifications as $notification)
-                                        <div @if ($loop->first)
-                                            class="hidden"
-                                        @else
-                                            class="dropdown-divider"
-                                        @endif ></div>
-                                        <a class="dropdown-item" href="">{{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}</a>
+                                            <div @if ($loop->first)
+                                                class="hidden"
+                                            @else
+                                                class="dropdown-divider"
+                                            @endif ></div>
+                                            @php
+                                                $current_buyer_id = $notification->data['sender_name'];
+                                                $current_product_id = $notification->data['product_id']
+                                            @endphp
+                                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['sender_id'] }}/{{ $notification->data['product_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
+                                                {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
+                                            </a>
                                         @endforeach
                                     @endif
                                     <div class="dropdown-divider"></div>
@@ -104,7 +117,9 @@
                                 </div>
                             </li>
                             <li class="navbar nav-item">
-                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold"><i title="Messages" class="far fa-lg fa-envelope"></i></a>
+                                <a  href="/conversations" class="nav-link text-secondary font-weight-bold">
+                                    <i title="Messages" class="far fa-lg fa-envelope"></i>
+                                </a>
                             </li>
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -152,32 +167,36 @@
                         @else
                             class="dropdown-divider"
                         @endif ></div>
-                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal">{{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}</a>
+                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['sender_id'] }}/{{ $notification->data['product_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
+                                {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
+                            </a>
                         @endforeach
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="confirmModalLabel">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        You are about to sell the product to the selected buyer. Please select any of the two options...
+                        <p>You are about to sell the product to the selected buyer. Please select any of the two options...</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <form action="/notifyDM/{{ $current_buyer_id }}/{{ $current_product_id }}">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <input type="submit" value="Notify Delivery Man" class="btn btn-success">
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     @endif
 </body>
 

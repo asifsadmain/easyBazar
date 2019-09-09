@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\DeliveryMan;
-use App\Notifications\NotifyDM;
-use Illuminate\Support\Facades\Notification;
+use App\User;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -30,12 +30,8 @@ class HomeController extends Controller
         return view('home', ['categories' => Category::all()]);
     }
 
-    public function notifyDM()
+    public function notifyDM($bid, $pid)
     {
-        $deliverymen = DeliveryMan::all();
-
-        foreach ($deliverymen as $dm) {
-            $dm->notify(new NotifyDM(1));
-        }
+        return redirect("/transactionDetails/{$bid}/{$pid}");
     }
 }

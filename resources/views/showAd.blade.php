@@ -121,7 +121,11 @@
                 <p class="card-text">{{ $advertisement->warranty }} month(s)</p>
             @endif
             @if (Auth::user())
-                <a id="request" href="/requestSeller/{{ $advertisement->user_id }}/{{ $advertisement->product_id }}" class="btn btn-success">Request seller to buy this product</a>
+                @if ($ifRequested->isEmpty())
+                    <a id="request" href="/requestSeller/{{ $advertisement->user_id }}/{{ $advertisement->product_id }}" class="btn btn-success">Request seller to buy this product</a>
+                @else
+                    <a id="request" href="" class="btn btn-secondary">You've already requested the seller</a>
+                @endif
             @endif
             @if (Auth::user())
                 <form method="POST" action="{{ URL::to("/showAd/sendMessage/{$advertisement->user_id}") }}">
