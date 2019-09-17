@@ -4,6 +4,7 @@
     <div class="card" style="width: 30rem; left:30%;">
         <div class="card-body text-center">
             <h5 class="card-title text-center text-white bg-primary">Order details</h5>
+            <p class="card-text"><strong>Transaction ID: </strong>{{ $transaction->id }}</p>
             <p class="card-text"><strong>Product Name: </strong>{{ $product->name }}</p>
             <p class="card-text"><strong>Seller's Name: </strong>{{ auth()->user()->name }}</p>
             <p class="card-text"><strong>Seller's Address: </strong>{{ auth()->user()->address }}</p>

@@ -88,37 +88,39 @@
         </div>
         <div class="bg-light col-sm-6">
             <h1 class="text-primary text-center">{{ $advertisement->product_name }}</h1>
-            <h3 class="text-danger text-center">BDT: {{ $advertisement->proposed_price }}</h3>
+            <h5 class="text-danger text-center">BDT: {{ $advertisement->proposed_price }}</h5>
+            <p class="text-primary text-center"><strong>Available: </strong>{{ $advertisement->quantity }}</p>
             <p class="text-primary text-center">{{ $advertisement->address }}</p>
-            <h5 class="card-text">Brand:</h5>
-            <p class="card-text">{{ $advertisement->brand }}</p>
-            <h5 class="card-text">Condition:</h5>
-            <p class="card-text">{{ $advertisement->condition }}</p>
+            <p class="text-primary text-success text-center"><strong>Contact: </strong>{{ $advertisement->mobile_no }}</p>
+            {{-- <h5 class="card-text">Brand:</h5> --}}
+            <p class="card-text"><strong>Brand: </strong>{{ $advertisement->brand }}</p>
+            {{-- <h5 class="card-text">Condition:</h5> --}}
+            <p class="card-text"><strong>Condition: </strong>{{ $advertisement->condition }}</p>
             @if ($advertisement->buying_year)
-                <h5 class="card-text">Buying Year:</h5>
-                <p class="card-text">{{ $advertisement->buying_year }}</p>
+                {{-- <h5 class="card-text">Buying Year:</h5> --}}
+                <p class="card-text"><strong>Buying Year: </strong>{{ $advertisement->buying_year }}</p>
             @endif
             <h5 class="card-text">Specification:</h5>
             <p class="card-text">{{ $advertisement->specification }}</p>
             @if ($advertisement->color)
-                <h5 class="card-text">Color:</h5>
-                <p class="card-text">{{ $advertisement->color }}</p>
+                {{-- <h5 class="card-text">Color:</h5> --}}
+                <p class="card-text"><strong>Color: </strong>{{ $advertisement->color }}</p>
             @endif
             @if ($advertisement->weight)
-                <h5 class="card-text">Weight:</h5>
-                <p class="card-text">{{ $advertisement->weight }} kg(s)</p>
+                {{-- <h5 class="card-text">Weight:</h5> --}}
+                <p class="card-text"><strong>Weight: </strong>{{ $advertisement->weight }} kg(s)</p>
             @endif
             @if ($advertisement->size)
-                <h5 class="card-text">Size:</h5>
-                <p class="card-text">{{ $advertisement->size }} metre(s)</p>
+                {{-- <h5 class="card-text">Size:</h5> --}}
+                <p class="card-text"><strong>Size: </strong>{{ $advertisement->size }} metre(s)</p>
             @endif
             @if ($advertisement->guarantee)
-                <h5 class="card-text">Guarantee:</h5>
-                <p class="card-text">{{ $advertisement->guarantee }} month(s)</p>
+                {{-- <h5 class="card-text">Guarantee:</h5> --}}
+                <p class="card-text"><strong>Guarantee: </strong>{{ $advertisement->guarantee }} month(s)</p>
             @endif
             @if ($advertisement->warranty)
-                <h5 class="card-text">Warranty:</h5>
-                <p class="card-text">{{ $advertisement->warranty }} month(s)</p>
+                {{-- <h5 class="card-text">Warranty:</h5> --}}
+                <p class="card-text"><strong>Warranty: </strong>{{ $advertisement->warranty }} month(s)</p>
             @endif
             @if (Auth::user())
                 @if ($ifRequested->isEmpty())

@@ -43,6 +43,7 @@ class NotifyDM extends Notification
     {
         return [
             'notificationTime' => Carbon::now(),
+            'notificationType' => "NotifyDM",
             'sender_id' => auth()->user()->id,
             'sender_name' => auth()->user()->name,
             'sender_address' => auth()->user()->address,
@@ -50,7 +51,8 @@ class NotifyDM extends Notification
             'buyer_name' => $this->details['buyer_name'],
             'buyer_address' => $this->details['buyer_address'],
             'product_id' => $this->details['product_id'],
-            'product_name' => $this->details['product_name']
+            'product_name' => $this->details['product_name'],
+            'order_id' => $this->details['order_id']
         ];
     }
 

@@ -34,7 +34,7 @@ Route::get('/test2', function () {
     return view('test2');
 });
 
-Route::get('/notifyDM/{bid}/{pid}', 'HomeController@notifyDM')->name('notifyDM');
+Route::get('/notifyDM/{oid}', 'HomeController@notifyDM')->name('notifyDM');
 Route::get('/requestSeller/{uid}/{pid}', 'NotificationController@requestSeller');
 
 Auth::routes();
@@ -87,7 +87,7 @@ Route::post('/dm/register/submit', 'DMRegisterController@register');
 Route::get('/dm/login', 'Auth\DMLoginController@showLoginForm')->name('dm.login');
 Route::post('/dm/login', 'Auth\DMLoginController@login')->name('dm.login.post');
 Route::post('/dm/logout', 'Auth\DMLoginController@logout')->name('dm.logout');
-Route::get('showRoute/{id}', 'DeliveryManController@showRoute');
+Route::get('showRoute/{oid}', 'DeliveryManController@showRoute');
 
 Route::group(['middleware'=>'dm'], function() {
     Route::get('/dm/home', 'dm\HomeController@index');
@@ -97,6 +97,8 @@ Route::get('/dm/home', function() {
     return view('dm.home');
 });
 
+Route::get('/dm/changeStatus', 'DeliveryManController@changeStatus');
+
 Route::get('/dm/markAsRead', function () {
     auth('dm')->user()->unreadNotifications->markAsRead();
 });
@@ -105,5 +107,6 @@ Route::get('/markAsRead', function () {
     auth()->user()->unreadNotifications->markAsRead();
 });
 
-Route::get('/transactionDetails/{bid}/{pid}', 'TransactionController@index');
+Route::get('/transactionDetails/{oid}', 'TransactionController@index');
+Route::get('/acceptOrder/{oid}', 'NotificationController@acceptOrder');
 

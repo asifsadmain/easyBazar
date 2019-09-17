@@ -17,11 +17,23 @@ class ShowProductsController extends Controller
 
     public function index($id)
     {
-        $productsWithPrice = DB::table('products')
+        if(auth()->user())
+        {
+            $productsWithPrice = DB::table('products')
+            ->join('advertisements', 'products.id', '=', 'advertisements.product_id')
+            ->select('products.*', 'advertisements.proposed_price')
+            ->where('products.category_id', $id)
+            ->where('advertisements.user_id', '!=', auth()->user()->id)
+            ->get();
+        }
+        else
+        {
+            $productsWithPrice = DB::table('products')
             ->join('advertisements', 'products.id', '=', 'advertisements.product_id')
             ->select('products.*', 'advertisements.proposed_price')
             ->where('products.category_id', $id)
             ->get();
+        }
 
         return view('showProducts', ['products' => $productsWithPrice, 'categories' => Category::all()]);
     }

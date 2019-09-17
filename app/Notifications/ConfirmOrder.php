@@ -8,11 +8,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RequestSeller extends Notification
+class ConfirmOrder extends Notification
 {
     use Queueable;
-
-    private $details;
 
     /**
      * Create a new notification instance.
@@ -45,13 +43,10 @@ class RequestSeller extends Notification
     {
         return [
             'notificationTime' => Carbon::now(),
-            'notificationType' => "RequestSeller",
-            'sender_id' => auth()->user()->id,
-            'sender_name' => auth()->user()->name,
-            'sender_address' => auth()->user()->address,
-            'receiver_id' => $this->details['seller_id'],
-            'product_id' => $this->details['product_id'],
-            'product_name' => $this->details['product_name'],
+            'notificationType' => "ConfirmOrder",
+            'sender_id' => auth('dm')->user()->id,
+            'sender_name' => auth('dm')->user()->name,
+            'sender_address' => auth('dm')->user()->address,
             'order_id' => $this->details['order_id']
         ];
     }

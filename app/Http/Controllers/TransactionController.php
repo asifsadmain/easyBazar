@@ -14,38 +14,39 @@ use Illuminate\Support\Facades\Notification;
 
 class TransactionController extends Controller
 {
-    public function index($bid, $pid)
+    public function index($oid)
     {
         $deliverymen = DeliveryMan::where('availability', 1)->get();
 
-        $buyer = User::find($bid);
-        $product = Product::find($pid);
+        $order = DB::table('requests')->find($oid);
+        $buyer = User::find($order->user_id);
+        $product = Product::find($order->product_id);
 
         $transaction = new Transaction;
-        $user = User::find($bid);
-        $product = Product::find($pid);
 
-        $ad = DB::table('advertisements')->where('product_id', $pid)->get();
+        $ad = DB::table('advertisements')->where('product_id', $product->id)->get();
 
+        $transaction->order_id = $oid;
         $transaction->seller_id = auth()->user()->id;
-        $transaction->buyer_id = $bid;
-        $transaction->product_id = $pid;
+        $transaction->buyer_id = $buyer->id;
+        $transaction->product_id = $product->id;
         $transaction->payment_method = "cash";
 
         $transaction->save();
 
         $details = [
-            'buyer_id' => $bid,
+            'buyer_id' => $buyer->id,
             'buyer_name' => $buyer->name,
             'buyer_address' => $buyer->address,
-            'product_id' => $pid,
-            'product_name' => $product->name
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'order_id' => $oid
         ];
 
         foreach ($deliverymen as $dm) {
             $dm->notify(new NotifyDM($details));
         }
 
-        return view('transaction', ['buyer' => $user, 'product' => $product, 'ad' => $ad]);
+        return view('transaction', ['buyer' => $buyer, 'product' => $product, 'ad' => $ad, 'transaction' => $transaction]);
     }
 }

@@ -69,7 +69,9 @@
                                     @else
                                         class="dropdown-divider"
                                     @endif ></div>
-                                    <a class="dropdown-item" href="/showRoute/{{ $notification->data['sender_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                                    @if ($notification->data['notificationType'] == "NotifyDM")
+                                    <a class="dropdown-item" href="/showRoute/{{ $notification->data['order_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                                    @endif
                                     @endforeach
                                 @endif
                                 <div class="dropdown-divider"></div>
@@ -125,7 +127,9 @@
                         @else
                             class="dropdown-divider"
                         @endif ></div>
-                        <a class="dropdown-item" href="/showRoute/{{ $notification->data['sender_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                        @if ($notification->data['notificationType'] == "NotifyDM")
+                        <a class="dropdown-item" href="/showRoute/{{ $notification->data['order_id'] }}">{{ $notification->data['sender_name']." has requested you near ". $notification->data['sender_address'] }}</a>
+                        @endif
                         @endforeach
                     </div>
                 </div>

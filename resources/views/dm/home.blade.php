@@ -21,6 +21,17 @@
 <body>
     @include('layouts.appdm')
     <div id="map" style="height: 50%;"></div>
+    <br>
+    <div style="margin-left:20px;">
+        <h5>Current status: 
+            @if (Auth::guard('dm')->user()->availability == 1)
+                <strong class="text-success">available</strong>
+            @else
+                <strong class="text-danger">unavailable</strong>
+            @endif
+        </h5>
+        <a href="/dm/changeStatus" class="btn btn-primary">Change Status</a>
+    </div>
     <script>
         // Note: This example requires that you consent to location sharing when
         // prompted by your browser. If you see the error "The Geolocation service

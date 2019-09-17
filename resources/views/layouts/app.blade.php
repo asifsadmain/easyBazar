@@ -50,10 +50,10 @@
                             {{ csrf_field() }}
                         </div>
                     </ul>
-                    @php
+                    {{-- @php
                         $current_buyer_id = "";
                         $current_product_id = "";
-                    @endphp
+                    @endphp --}}
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -87,7 +87,11 @@
                             </li> --}}
                             <li class="navbar nav-item dropdown" id="markAsRead" onclick="markNotificationsAsRead()">
                                 <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
+                                    @if (count(Auth::user()->unreadNotifications))
+                                        <i class="fas fa-lg fa-globe-asia"></i><span class="badge badge-danger">{{ count(Auth::user()->unreadNotifications) }}</span>
+                                    @else
+                                        <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
+                                    @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
                                     @if (count(Auth::user()->unreadNotifications)==0)
@@ -103,13 +107,20 @@
                                             @else
                                                 class="dropdown-divider"
                                             @endif ></div>
-                                            @php
+                                            {{-- @php
                                                 $current_buyer_id = $notification->data['sender_name'];
                                                 $current_product_id = $notification->data['product_id']
-                                            @endphp
-                                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['sender_id'] }}/{{ $notification->data['product_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
+                                            @endphp --}}
+                                            @if ($notification->data['notificationType'] == "RequestSeller")
+                                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['order_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
                                                 {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
                                             </a>
+                                            @endif
+                                            @if ($notification->data['notificationType'] == "ConfirmOrder")
+                                                <a class="dropdown-item" href="">
+                                                    {{ "Delivery man ".$notification->data['sender_name']." is on the way"}}
+                                                </a>
+                                            @endif
                                         @endforeach
                                     @endif
                                     <div class="dropdown-divider"></div>
@@ -167,9 +178,16 @@
                         @else
                             class="dropdown-divider"
                         @endif ></div>
-                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['sender_id'] }}/{{ $notification->data['product_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
+                        @if ($notification->data['notificationType'] == "RequestSeller")
+                            <a class="dropdown-item" href="/notifyDM/{{ $notification->data['order_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
                                 {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
                             </a>
+                        @endif
+                        @if ($notification->data['notificationType'] == "ConfirmOrder")
+                            <a class="dropdown-item" href="">
+                                {{ "Delivery man ".$notification->data['sender_name']." is on the way"}}
+                            </a>
+                        @endif
                         @endforeach
                     </div>
                 </div>

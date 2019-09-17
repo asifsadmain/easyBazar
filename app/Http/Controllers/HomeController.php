@@ -30,8 +30,8 @@ class HomeController extends Controller
         return view('home', ['categories' => Category::all()]);
     }
 
-    public function notifyDM($bid, $pid)
+    public function notifyDM($oid)
     {
-        return redirect("/transactionDetails/{$bid}/{$pid}");
+        return redirect("/transactionDetails/{$oid}");
     }
 }

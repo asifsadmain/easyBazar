@@ -48,12 +48,12 @@
         <div class="row">
             @foreach ($categories as $category)
                 <div class="col-md-2">
-                    <div class="flip-card">
+                    <div class="flip-card" style="cursor: pointer;">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
                                 <img class="img-center" src="/uploads/{{ $category->image }}" alt="category" style="width:150px;height:150px;">
                             </div>
-                            <div class="flip-card-back">
+                            <div class="flip-card-back" onclick="location.href='/categories/{{ $category->id }}';">
                                 <br><br>
                                 <a class="text-center text-white" href="{{ url("/categories/{$category->id}") }}">{{ $category->name }}</a>
                             </div>
