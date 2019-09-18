@@ -196,4 +196,10 @@ class profileController extends Controller
         return redirect("/userDashboard/activities");
     }
 
+    public function viewProfile($id)
+    {
+        $user = User::find($id);
+
+        return view('viewProfile', ['user' => $user]);
+    }
 }

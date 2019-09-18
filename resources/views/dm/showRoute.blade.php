@@ -59,10 +59,10 @@
       </div>
     </div>
     <div style="margin-left:20px;">
-      @if (!$order->dm_id)
+      @if (!Auth::guard('dm')->user()->on_duty)
         <a href="/acceptOrder/{{$order->id}}" class="btn btn-success">Accept Order</a>
       @else
-        <a href="" class="btn btn-secondary">Accepted</a>
+        <a href="" class="">You are currently delivering a product</a>
       @endif
     </div>
     <script>

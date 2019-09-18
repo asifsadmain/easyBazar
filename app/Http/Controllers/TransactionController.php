@@ -49,4 +49,18 @@ class TransactionController extends Controller
 
         return view('transaction', ['buyer' => $buyer, 'product' => $product, 'ad' => $ad, 'transaction' => $transaction]);
     }
+
+    public function orderStatus()
+    {
+        $trx = Transaction::find(auth()->user()->trx_id);
+        $user = User::find(auth()->user()->id);
+
+        if($trx->product_received && $trx->seller_paid && $trx->delivered_product && $trx->payment_received)
+        {
+            $user->trx_id = NULL;
+            $user->save();
+        }
+
+        return view('orderStatus', ['transaction' => $trx]);
+    }
 }

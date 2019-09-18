@@ -26,7 +26,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body >
+<body>
     <div>
         <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="height:15%">
             <div class="container">
@@ -115,10 +115,32 @@
                                             <a class="dropdown-item" href="/notifyDM/{{ $notification->data['order_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
                                                 {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
                                             </a>
+                                            <a class="dropdown-item text-primary" href="/user/viewProfile/{{ $notification->data['sender_id'] }}">View Profile</a>
                                             @endif
                                             @if ($notification->data['notificationType'] == "ConfirmOrder")
-                                                <a class="dropdown-item" href="">
+                                                <a class="dropdown-item" href="/user/orderStatus">
                                                     {{ "Delivery man ".$notification->data['sender_name']." is on the way"}}
+                                                </a>
+                                                <a class="dropdown-item text-primary" href="/dm/viewProfile/{{ $notification->data['sender_id'] }}">View Profile</a>
+                                            @endif
+                                            @if ($notification->data['notificationType'] == "ProductReceived")
+                                                <a class="dropdown-item" href="/user/orderStatus">
+                                                    {{ "Delivery man ".$notification->data['sender_name']." has received the product from seller"}}
+                                                </a>
+                                            @endif
+                                            @if ($notification->data['notificationType'] == "SellerPaid")
+                                                <a class="dropdown-item" href="/user/orderStatus">
+                                                    {{ "Delivery man ".$notification->data['sender_name']." has paid the seller"}}
+                                                </a>
+                                            @endif
+                                            @if ($notification->data['notificationType'] == "ProductDelivered")
+                                                <a class="dropdown-item" href="/user/orderStatus">
+                                                    {{ "Delivery man ".$notification->data['sender_name']." has successfully delivered the product"}}
+                                                </a>
+                                            @endif
+                                            @if ($notification->data['notificationType'] == "BuyerPaid")
+                                                <a class="dropdown-item" href="/user/orderStatus">
+                                                    {{ "Delivery man ".$notification->data['sender_name']." has received the payment from buyer"}}
                                                 </a>
                                             @endif
                                         @endforeach
@@ -132,6 +154,11 @@
                                     <i title="Messages" class="far fa-lg fa-envelope"></i>
                                 </a>
                             </li>
+                            {{-- @if(Auth::user()->trx_id)
+                            <li class="navbar nav-item">
+                                <a  href="/user/orderStatus" class="nav-link text-secondary font-weight-bold"><i title="Pick a Product" class="fas fa-lg fa-biking" style="color:red"></i></a>
+                            </li>
+                            @endif --}}
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -182,10 +209,32 @@
                             <a class="dropdown-item" href="/notifyDM/{{ $notification->data['order_id'] }}" onclick="return confirm('Do you want to notify delivery man?')">
                                 {{ $notification->data['sender_name']." is interested to buy ". $notification->data['product_name'] }}
                             </a>
+                            <a class="dropdown-item text-primary" href="/user/viewProfile/{{ $notification->data['sender_id'] }}">View Profile</a>
                         @endif
                         @if ($notification->data['notificationType'] == "ConfirmOrder")
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item" href="/user/orderStatus">
                                 {{ "Delivery man ".$notification->data['sender_name']." is on the way"}}
+                            </a>
+                            <a class="dropdown-item text-primary" href="/dm/viewProfile/{{ $notification->data['sender_id'] }}">View Profile</a>
+                        @endif
+                        @if ($notification->data['notificationType'] == "ProductReceived")
+                            <a class="dropdown-item" href="/user/orderStatus">
+                                {{ "Delivery man ".$notification->data['sender_name']." has received the product from seller"}}
+                            </a>
+                        @endif
+                        @if ($notification->data['notificationType'] == "SellerPaid")
+                            <a class="dropdown-item" href="/user/orderStatus">
+                                {{ "Delivery man ".$notification->data['sender_name']." has paid the seller"}}
+                            </a>
+                        @endif
+                        @if ($notification->data['notificationType'] == "ProductDelivered")
+                            <a class="dropdown-item" href="/user/orderStatus">
+                                {{ "Delivery man ".$notification->data['sender_name']." has successfully delivered the product"}}
+                            </a>
+                        @endif
+                        @if ($notification->data['notificationType'] == "BuyerPaid")
+                            <a class="dropdown-item" href="/user/orderStatus">
+                                {{ "Delivery man ".$notification->data['sender_name']." has received the payment from buyer"}}
                             </a>
                         @endif
                         @endforeach

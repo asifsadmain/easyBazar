@@ -38,7 +38,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                    {{-- <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mx-auto">
                         <div class="container box nav-item">       
                             <br>                     
@@ -49,7 +49,7 @@
                             </div>
                             {{ csrf_field() }}
                         </div>
-                    </ul>
+                    </ul> --}}
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -57,7 +57,11 @@
                         @if (Auth::guard('dm')->check())
                         <li class="navbar nav-item dropdown" id="markAsRead" onclick="markNotificationsAsRead()">
                             <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
+                                @if (count(Auth::guard('dm')->user()->unreadNotifications))
+                                    <i class="fas fa-lg fa-globe-asia"></i><span class="badge badge-danger">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
+                                @else
+                                    <i class="fas fa-lg fa-globe-asia"></i><span class="badge">{{ count(Auth::guard('dm')->user()->unreadNotifications) }}</span>
+                                @endif
                             </a>
                             <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
                                 @if (count(Auth::guard('dm')->user()->unreadNotifications)==0)
@@ -79,7 +83,9 @@
                             </div>
                         </li>
                             <li class="navbar nav-item">
-                                <a  href="#" class="nav-link text-secondary font-weight-bold"><i title="Pick a Product" class="fas fa-lg fa-biking"></i></a>
+                                @if (Auth::guard('dm')->user()->on_duty)
+                                    <a  href="/dm/orderStatus" class="nav-link text-secondary font-weight-bold"><i title="Delivery Status" class="fas fa-lg fa-biking" style="color:red;"></i></a>
+                                @endif
                             </li>
                             <li class="navbar nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -139,36 +145,6 @@
 </body>
 
 </html>
-
-<script>
-    $(document).ready(function(){
-    
-        $('#product_name').keyup(function(){ 
-            var query = $(this).val();
-            if(query != '')
-            {
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                url:"{{ route('autocomplete.fetch') }}",
-                method:"POST",
-                data:{query:query, _token:_token},
-                success:function(data){
-                $('#productList').fadeIn();  
-                        $('#productList').html(data);
-                }
-                });
-            }
-        });
-    
-        $(document).on('click', 'li', function(){  
-            $('#product_name').val($(this).text());  
-            $('#productList').fadeOut();  
-        }); 
-
-        
-    
-    });
-</script>
 
 <script>
     function markNotificationsAsRead() {

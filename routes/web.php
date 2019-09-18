@@ -67,6 +67,9 @@ Route::get('/conversations', function() {
     return view('conversation');
 });
 
+Route::get('/user/orderStatus', 'TransactionController@orderStatus');
+Route::get('/user/viewProfile/{id}', 'profileController@viewProfile');
+
 Route::get('/userDashboard', 'profileController@index');
 Route::get('/editProfile', function() {
     return view('editProfile');
@@ -98,6 +101,7 @@ Route::get('/dm/home', function() {
 });
 
 Route::get('/dm/changeStatus', 'DeliveryManController@changeStatus');
+Route::get('/dm/viewProfile/{id}', 'DeliveryManController@viewProfile');
 
 Route::get('/dm/markAsRead', function () {
     auth('dm')->user()->unreadNotifications->markAsRead();
@@ -109,4 +113,9 @@ Route::get('/markAsRead', function () {
 
 Route::get('/transactionDetails/{oid}', 'TransactionController@index');
 Route::get('/acceptOrder/{oid}', 'NotificationController@acceptOrder');
+Route::get('/dm/orderStatus', 'DeliveryManController@orderStatus');
 
+Route::get('/receiveProduct', 'NotificationController@receiveProduct');
+Route::get('/paySeller', 'NotificationController@paySeller');
+Route::get('/deliverProduct', 'NotificationController@deliverProduct');
+Route::get('/receivePayment', 'NotificationController@receivePayment');
